@@ -1,0 +1,21 @@
+{
+  "name": "Learn polymer",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Srikanth Kondparthy",
+    "Garry Pathak"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+     "polymer": "Polymer/polymer#^1.0.0"
+  }
+}
