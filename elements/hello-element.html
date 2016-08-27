@@ -1,11 +1,36 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<dom-module name="hello-element">	
+
+<script>
+	// Create Class
+	var HelloElement = Polymer.Class({
+		is: 'hello-element',
+		created: function () {
+			this.textContent = "Hello there";
+		}
+	});
+
+	// Register element using the created class
+	document.registerElement('hello-element', HelloElement);
+
+	// Create a instance of the element using registered Class Element and append it to any DOM element
+	var el1 = new HelloElement();
+	document.querySelector('body').appendChild(el1);
+
+	// Another way is to create element using document.creatElement method
+	var el2 = document.createElement('hello-element');
+	document.querySelector('body').appendChild(el2);
+
+</script>
+
+<!-- Using DOM MODULE method -->
+<!-- <dom-module id="hello-element">
 	<template>
 		Hello there
 	</template>
 </dom-module>
+
 <script>
 	Polymer({
-		is: "hello-element"
+		is: 'hello-element'
 	});
-</script>
+</script> -->
