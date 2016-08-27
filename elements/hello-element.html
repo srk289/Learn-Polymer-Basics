@@ -1,11 +1,44 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<dom-module name="hello-element">	
-	<template>
-		Hello there
-	</template>
-</dom-module>
 <script>
-	Polymer({
-		is: "hello-element"
+	// Create class of polymer element
+	var HelloEle = Polymer.Class({
+		is: "hello-element",
+		created: function (){
+			this.textContent = "Hello events demo";
+			console.log('CREATED: At this stage property values are still not set');
+			debugger
+		},
+		ready: function (){
+			console.log('READY: Now properties are set, data is copied and pasted in the elements instancd, all of the elements inside the local DOM are ready. Basically, complete element is constructed but not attached to DOM yet');
+			debugger
+		},
+		attached: function (){
+			console.log('ATTACHED: Now element has been added to the DOM');
+			debugger
+		},
+		detached: function (){
+			console.log('DETACHED: Now the element has been detached from the DOM');
+			debugger
+		},
+		factoryImpl: function (){
+			console.log('FACTORYIMPL: This is triggered because this element is created using constuctor method ( var el = new ElementClass() )');
+			debugger
+		},
+		attributeChanged: function (attr, oldVal, newVal){
+			console.log('ATTRIBUTECHANGED: '+ attr + ' has been changed and its oldVal is '+ oldVal+ ' and new Val is '+ newVal);
+			debugger
+		}
 	});
+
+	// Register the custom element into DOM
+	document.registerElement('hello-element', HelloEle);
+
+	// Create instance of the element
+	var el = new HelloEle();
+	el.setAttribute('createdBy', 'constuct method');
+	// Append the instance of the element to DOM
+	document.querySelector('body').appendChild(el);
+
+
+
 </script>
