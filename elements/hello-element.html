@@ -2,28 +2,31 @@
 <dom-module name="hello-element">	
 	<template>
 		[[message]]
-		<!-- For attribute binding use dollar $ as suffix to the property -->
-		<input type$={{testattr}} value="{{message::input}}">
-		<div data-items$="{{items}}"></div>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: "hello-element",
 		properties: {
+			loaded: {
+				type: Boolean,
+				value: true
+			},
 			message: {
 				type: String,
-				value: 'hello there',
-				notify: true // message-changed event gets broadcasted to other elements. 
-			},
-			testattr: {
-				type: String,
-				value: 'text'
-			},
-			items:{
-				type: Array,
-				value: [1, 2, 3, 4, 5]
+				computed: 'computedMessage(loaded)'
 			}
+		},
+		computedMessage: function (loaded){
+			return (loaded) ? 'loaded!!' : 'loading';
+		},
+		ready: function	(){
+			var self = this;
+			self.loaded = false;
+			setTimeout(function(){
+				self.loaded = true;
+			}, 2000);
 		}
+
 	});
 </script>
