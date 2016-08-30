@@ -1,11 +1,32 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+
 <dom-module name="hello-element">	
 	<template>
-		Hello there
+		[[message.hi]]
+		<paper-input value="{{message.hi}}"></paper-input>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: "hello-element"
+		is: "hello-element",
+		properties: {
+			message: {
+				type: String,
+				value: function (){
+					return {
+						hi: 'Hi how are you',
+						hello: 'Hello how are you'
+					}
+				}
+			}
+		},
+		ready: function ()
+		{
+			// this.message.hi = "hiiii";
+			// this.message = {hi: 'hiiii', hello: 'hello how are you'}
+			// this.notifyPath("message.hi", "hiii");
+			this.set("message.hi", 'hiii'); // 
+		}
 	});
 </script>
