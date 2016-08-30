@@ -1,11 +1,24 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
 <dom-module name="hello-element">	
 	<template>
-		Hello there
+		[[message]]
+		<!-- For custom element Property-changed event gets triggered i.e in this case it value-changed and we do not explicitly add this as suffix to track change. Polymer does this anyway -->
+		<paper-input value={{message::value-changed}}></paper-input>
+		<!-- For a native element -->
+		<!-- Listen to the event i.e input event. This is because for native input element 'input' event get triggered when value is changed. (not the property event like in custom element) -->
+		<input type="text" value="{{message::input}}">
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: "hello-element"
+		is: "hello-element",
+		properties: {
+			message: {
+				type: String,
+				value: 'hello there',
+				notify: true // message-changed event gets broadcasted to other elements. 
+			}
+		}
 	});
 </script>
