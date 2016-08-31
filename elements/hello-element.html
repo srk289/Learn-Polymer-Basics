@@ -1,9 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <dom-module name="hello-element">	
 	<template>
-		<div hidden$="{{ !loaded }}">
+		<div hidden$="{{ !load.status }}">
 			{{message}}
-			(<span>{{ loadingPercent }}%</span>)
+			(<span>{{ load.percent }}%</span>)
 		</div>
 	</template>
 </dom-module>
@@ -11,43 +11,42 @@
 	Polymer({
 		is: "hello-element",
 		properties: {
-			loaded: {
-				type: Boolean,
-				value: true
-			},
-			loadingPercent:{
-				type: Number,
-				value: 0
+			load: {
+				type: Object,
+				value: function (){
+					return {
+						status: true,
+						percent: 0
+					}
+				}
 			},
 			message: {
 				type: String,
 				value: 'Hello',
-				// Observer is a type of property which triggers a function 
-				// when the property value is updated. 
-				// It has old and new values as args
 				observer: 'messageObserver'
 			}
 		},
-		// Observers: is an array that can set to elements prototype
-		// Observers is collections of fucntions triggered when the used 
-		// args are changed. 
-		// In the below example everytime 'loaded' or 'loadingpercent' is 
-		// updated, loadCheck function is triggered
-		// 
 		observers: [
-			'loadCheck(loaded, loadingPercent)'
+			'loadCheck(load.status, load.percent)',
+			'loadCheckAll(load.*)'
 		],
 		loadCheck: function (l, lpercent)
 		{
-			console.log('loaded ', l, ' :', lpercent);
+			console.log('loadcheck loaded ', l, ' :', lpercent);
+		},
+		loadCheckAll: function(l)
+		{
+			console.log('loadCHeckAll load ', l);
 		},
 		messageObserver: function (oldv, newv){
 			console.log(oldv, ':', newv)
 		},
 		ready: function	(){
 			this.message = "hello updated";
-			this.loaded = true;
-			this.loadingPercent = 20;
+			// this.load.status = true;
+			this.load.percent = 10;
+			this.set('load.status', true);
+			this.set('load.percent', 20);
 		}
 
 	});
