@@ -1,52 +1,37 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <dom-module name="hello-element">	
 	<template>
-		<div hidden$="{{ !load.status }}">
-			{{message}}
-			(<span>{{ load.percent }}%</span>)
-		</div>
+		
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: "hello-element",
 		properties: {
-			load: {
-				type: Object,
-				value: function (){
-					return {
-						status: true,
-						percent: 0
-					}
+			messages: {
+				type: Array,
+				value: function(){
+					return [{
+						text: 'Loading Messages'
+					},
+					{
+						text: 'Messages Loaded'
+					}]
 				}
-			},
-			message: {
-				type: String,
-				value: 'Hello',
-				observer: 'messageObserver'
 			}
 		},
 		observers: [
-			'loadCheck(load.status, load.percent)',
-			'loadCheckAll(load.*)'
+			'messagesAddedorRemoved(messages.splices)'
 		],
-		loadCheck: function (l, lpercent)
-		{
-			console.log('loadcheck loaded ', l, ' :', lpercent);
-		},
-		loadCheckAll: function(l)
-		{
-			console.log('loadCHeckAll load ', l);
-		},
-		messageObserver: function (oldv, newv){
-			console.log(oldv, ':', newv)
+		messagesAddedorRemoved: function(changeRecord){
+			console.log('change Record', changeRecord);
 		},
 		ready: function	(){
-			this.message = "hello updated";
-			// this.load.status = true;
-			this.load.percent = 10;
-			this.set('load.status', true);
-			this.set('load.percent', 20);
+			this.splice('messages', 1, 1);
+			console.log('after splicing', this.messages);
+
+			this.push('messages', {text: 'Message Added'}, {text: 'Message Added'});
+			console.log('after adding new messages', this.messages);
 		}
 
 	});
