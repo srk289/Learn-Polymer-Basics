@@ -1,31 +1,40 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<dom-module id="hello-element" >
+<dom-module is="hello-element">
 	<template>
-	   <!-- Make sure the template if should apply to child of the main template -->
-		<template is="dom-if" if="{{isSecureMessage}}">
-			{{message}}
+		<!-- simple array loop -->
+		<template is="dom-repeat" items="{{messages}}">
+				{{index}} : {{item}} <br/>
 		</template>
+		<ul>
+			<template is="dom-repeat" items="{{priorityMessage}}" as="priority">
+				<li>{{priority.name}} :
+					<ul> 
+						<template is="dom-repeat" items="{{priority.levels}}" as="level">
+							<li>{{level}}</li>
+						</template>
+					</ul>
+				</li>
+			</template>
+		</ul>
 	</template>
 </dom-module>
-
 <script>
 	Polymer({
 		is: 'hello-element',
 		properties: {
-			message: {
-				type: String,
-				value: "This message is super secure."
+			messages: {
+				type: Array,
+				value: ['message1', 'message2']
 			},
-			isSecureMessage: {
-				type: Boolean,
-				value: true
+			priorityMessage: {
+				type: Array,
+				value: function (){
+					return [
+					{name: 'name 1', levels: ["super majr", "kind of a major"]},
+					{name: 'name 2', levels: ["not super major", "not so imp"]}
+					]
+				}
 			}
-		},
-		ready: function(){
-			var self = this;
-			setTimeout(function(){
-				self.isSecureMessage = false;
-			}, 2000);
 		}
 	})
 </script>
