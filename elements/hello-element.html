@@ -9,8 +9,8 @@
 			<template is="dom-repeat" items="{{priorityMessage}}" as="priority">
 				<li>{{priority.name}} :
 					<ul> 
-						<template is="dom-repeat" items="{{priority.levels}}" as="level">
-							<li>{{level}}</li>
+						<template is="dom-repeat" items="{{priority.levels}}" as="level" index-as={{level_index}}>
+							<li>{{level_index}} : {{level}}</li>
 						</template>
 					</ul>
 				</li>
