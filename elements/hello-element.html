@@ -24,13 +24,21 @@
 			'messagesAddedorRemoved(messages.splices)'
 		],
 		messagesAddedorRemoved: function(changeRecord){
+			// Step 2: As soon as messages array was changed this function is triggered
+			// Step 5:
 			console.log('change Record', changeRecord);
+			//changeRecord has the information of the spliced elements from the message array. 
 		},
 		ready: function	(){
-			this.splice('messages', 1, 1);
+			this.splice('messages', 1, 1); // Step 1: as array is changed messagesAddedorRemoved function is triggered.
+
+			// Step 3
 			console.log('after splicing', this.messages);
 
-			this.push('messages', {text: 'Message Added'}, {text: 'Message Added'});
+
+			this.push('messages', {text: 'Message Added'}, {text: 'Message Added'}); // Step 4: Array has changed again. So messagesAddedorRemoved is triggered again. (ref Step 5)
+
+			// Step 6
 			console.log('after adding new messages', this.messages);
 		}
 
