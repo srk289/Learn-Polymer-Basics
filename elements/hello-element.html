@@ -1,32 +1,38 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<dom-module name="hello-element">	
-	<template>
-		<template id="messageList" is="dom-repeat" items={{messages}} as="message">
-			{{message}}
-			<button on-click="toggleSelect">{{message}}</button><br/>
-		</template>
 
-		<array-selector id="selector" items="{{messages}}" selected={{selected}} multi toggle></array-selector>
-		<br/>
-		<template is="dom-repeat" items="{{selected}}">
-			{{item}}<br/>
+<dom-module id="hello-element">
+	<template>
+		<input type="text" value="{{filterString::input}}"><br/>
+		<template id="messagesList" is="dom-repeat" items="{{messages}}" as="message" filter="{{filterMessages(filterString)}}" sort="sortMessages">
+			{{message.text}} : {{message.priority}}<br/>
 		</template>
 	</template>
 </dom-module>
+
 <script>
 	Polymer({
-		is: "hello-element",
+		is: 'hello-element',
 		properties: {
 			messages: {
 				type: Array,
-				value: function (){
-					return ['message 1', 'message 2']
+				value: function(){
+					return [
+						{text: 'Structural Engineers', priority: 3},
+						{text: 'Software Developers', priority: 2},
+						{text: 'Tradies', priority: 1},
+						{text: 'Miners', priority: 4}
+					];
 				}
+			},
+			filterString: String
+		},
+		filterMessages: function(str){
+			return function(m){
+				return m.text.indexOf(str) > -1;
 			}
 		},
-		toggleSelect: function(e){
-			var item = this.$.messageList.itemForElement(e.target);
-			this.$.selector.select(item);
+		sortMessages: function(a,b){
+			return a.priority - b.priority;
 		}
-	});
+	})
 </script>
