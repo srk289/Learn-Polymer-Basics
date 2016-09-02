@@ -1,11 +1,32 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <dom-module name="hello-element">	
 	<template>
-		Hello there
+		<template id="messageList" is="dom-repeat" items={{messages}} as="message">
+			{{message}}
+			<button on-click="toggleSelect">{{message}}</button><br/>
+		</template>
+
+		<array-selector id="selector" items="{{messages}}" selected={{selected}} multi toggle></array-selector>
+		<br/>
+		<template is="dom-repeat" items="{{selected}}">
+			{{item}}<br/>
+		</template>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: "hello-element"
+		is: "hello-element",
+		properties: {
+			messages: {
+				type: Array,
+				value: function (){
+					return ['message 1', 'message 2']
+				}
+			}
+		},
+		toggleSelect: function(e){
+			var item = this.$.messageList.itemForElement(e.target);
+			this.$.selector.select(item);
+		}
 	});
 </script>
