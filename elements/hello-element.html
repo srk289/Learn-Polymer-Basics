@@ -28,7 +28,7 @@
 		},
 		filterMessages: function(str){
 			return function(m){
-				return m.text.indexOf(str) > -1;
+				return m.text.toLowerCase().indexOf(str.toLowerCase()) > -1;
 			}
 		},
 		sortMessages: function(a,b){
